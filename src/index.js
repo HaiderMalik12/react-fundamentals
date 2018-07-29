@@ -21,7 +21,7 @@ const root = React.createElement(
         {},
         React.createElement(
             'p',
-            {},
+            { id: 'container' },
             'I am paragraph inside div')
     )
 );
