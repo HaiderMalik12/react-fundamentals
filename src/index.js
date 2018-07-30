@@ -1,30 +1,26 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { render } from 'react-dom';
 
 const node = document.getElementById('root');
 
-const root = React.createElement(
-    'div',
-    {},
-    //array of props or children
-    'Hello React',
-    'Hello world',
-    'I am learning React',
-    React.createElement(
-        'a',
-        { href: '/' },
-        'Learn React'),
-    'Hello world',
+class Project extends Component {
+    render() {
+        return React.createElement(
+            'div',
+            { className: 'projectName' },
+            `${this.props.id}-${this.props.name}`,
+            React.createElement(
+                'p',
+                {},
+                this.props.description)
+        )
+    }
+}
 
-    React.createElement(
-        'div',
-        {},
-        React.createElement(
-            'p',
-            { id: 'container' },
-            'I am paragraph inside div')
-    )
-);
-console.log(root);
+const App = React.createElement(Project, {
+    name: 'Learn React by building 10 Projects',
+    id: 1,
+    description: 'You will learn React Fundamentals and Real world apps'
+});
 
-render(root, node);
+render(App, node);
