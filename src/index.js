@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
+import PropTypes from 'prop-types';
 
 const node = document.getElementById('root');
 
@@ -15,6 +16,12 @@ class Project extends Component {
                 this.props.description)
         )
     }
+}
+
+Project.propTypes = {
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired
 }
 
 const App = React.createElement(Project, {
