@@ -5,6 +5,12 @@ import PropTypes from 'prop-types';
 const node = document.getElementById('root');
 
 class Project extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            tasks: this.props.tasks
+        }
+    }
     render() {
         //immutable data you could not change the props
         // this.props.name = 'Changed project'
@@ -16,10 +22,20 @@ class Project extends Component {
                 'div',
                 {},
                 this.props.description,
-                this.props.children,
+                //render all the tasks
+                this.state.tasks.map((task) => {
+                    return React.createElement(Task, {
+                        key: task.id,
+                        id: task.id,
+                        name: task.name
+                    })
+                })
             )
         )
     }
+}
+Project.propTypes = {
+    tasks: PropTypes.arrayOf(Object)
 }
 class NewTask extends Component {
     constructor(props) {
@@ -30,7 +46,6 @@ class NewTask extends Component {
     nameChangeHandler = (event) => {
         const value = event.target.value;
         this.setState((prevState, props) => {
-            console.log(prevState);
             return {
                 name: value
             }
@@ -77,7 +92,7 @@ Project.propTypes = {
 class Task extends Component {
     render() {
         return React.createElement(
-            'div',
+            'li',
             { className: 'taskName' },
             this.props.name
         )
@@ -87,13 +102,13 @@ class Task extends Component {
 const App = React.createElement(Project, {
     name: 'Learn React by building 10 Projects',
     id: 1,
-    description: 'You will learn React Fundamentals and Real world apps'
+    description: 'You will learn React Fundamentals and Real world apps',
+    tasks: [
+        { id: '1', name: 'Learn React' },
+        { id: '2', name: 'Learn Angular' },
+        { id: '3', name: 'Learn Redux' },
+    ]
 },
-    React.createElement(Task, {
-        id: 1,
-        name: 'Create Fundamenatls modoule'
-    }),
-    React.createElement(NewTask)
 );
 
 render(App, node);
