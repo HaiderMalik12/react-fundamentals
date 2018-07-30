@@ -13,7 +13,7 @@ class Project extends Component {
             { className: 'projectName' },
             `${this.props.id}-${this.props.name}`,
             React.createElement(
-                'p',
+                'div',
                 {},
                 this.props.description,
                 this.props.children,
@@ -25,18 +25,37 @@ class NewTask extends Component {
     constructor(props) {
         super(props);
         //initial state
-        this.state = { name: 'Learning React' }
+        this.state = { name: '' }
+    }
+    nameChangeHandler = (event) => {
+        const value = event.target.value;
+        this.setState((prevState, props) => {
+            console.log(prevState);
+            return {
+                name: value
+            }
+        })
+    }
+    submitHandler = (event) => {
+        event.preventDefault(); //don't reload the page
+        this.setState(() => ({
+            name: ''
+        }))
     }
     render() {
-        debugger;
         return React.createElement(
             'form',
-            {},
+            {
+                onSubmit: this.submitHandler
+            },
+            React.createElement('p', {}, this.state.name),
             React.createElement(
                 'input',
                 {
+                    type: 'text',
                     placeholder: 'Task name',
-                    value: this.state.name
+                    value: this.state.name,
+                    onChange: this.nameChangeHandler
                 }
             ),
             React.createElement(
