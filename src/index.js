@@ -11,6 +11,15 @@ class Project extends Component {
             tasks: this.props.tasks
         }
     }
+    submitHandler = (task) => {
+        //update
+        //dont modify the state directly
+        //you have to copy and create new array
+        const newTasks = this.state.tasks.concat([task]);
+        this.setState({
+            tasks: newTasks
+        })
+    }
     render() {
         //immutable data you could not change the props
         // this.props.name = 'Changed project'
@@ -30,7 +39,10 @@ class Project extends Component {
                         name: task.name
                     })
                 })
-            )
+            ),
+            React.createElement(NewTask, {
+                handleSubmit: this.submitHandler
+            })
         )
     }
 }
@@ -53,6 +65,14 @@ class NewTask extends Component {
     }
     submitHandler = (event) => {
         event.preventDefault(); //don't reload the page
+
+        const task = {
+            name: this.state.name
+        }
+        task.id = Date.now()
+        //call the handleSubmit from parent component
+        //which is project
+        this.props.handleSubmit(task);
         this.setState(() => ({
             name: ''
         }))
@@ -63,7 +83,6 @@ class NewTask extends Component {
             {
                 onSubmit: this.submitHandler
             },
-            React.createElement('p', {}, this.state.name),
             React.createElement(
                 'input',
                 {
@@ -84,6 +103,9 @@ class NewTask extends Component {
     }
 }
 
+NewTask.propTypes = {
+    handleSubmit: PropTypes.func.isRequired
+}
 Project.propTypes = {
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
