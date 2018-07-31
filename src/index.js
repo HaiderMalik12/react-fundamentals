@@ -4,36 +4,24 @@ import PropTypes from 'prop-types';
 
 const node = document.getElementById('root');
 
-class App extends Component {
+class Counter extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            todo: {
-                id: 1,
-                title: 'Learn React'
-            }
+            count: 1
         }
     }
-    changeTitleHandler = () => {
-        // this.setState(() => ({
-        //     todo: {
-        //         title: 'Learn Redux'
-        //     }
-        // }))
-        this.setState({
-            todo: {
-                title: 'Learn redux'
-            }
-        })
+    incrementHandler = () => {
+        ///....
     }
     render() {
         return (
             <div>
-                <h3> TODO Title:  {this.state.todo.title}</h3>
-                <button onClick={this.changeTitleHandler}> Change title</button>
+                <h3>{this.state.count} </h3>
+                <button> + </button>
             </div>
         )
     }
 }
 
-render(<App />, node);
+render(<Counter incrementBy={1} />, node);
