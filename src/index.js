@@ -15,16 +15,11 @@ class App extends Component {
         }
     }
     changeTitleHandler = () => {
-        // this.setState(() => ({
-        //     todo: {
-        //         title: 'Learn Redux'
-        //     }
-        // }))
-        this.setState({
+        this.setState(() => ({
             todo: {
-                title: 'Learn redux'
+                title: 'Learn Redux'
             }
-        })
+        }))
     }
     render() {
         return (
