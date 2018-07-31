@@ -11,17 +11,30 @@ class Counter extends Component {
             count: 1
         }
     }
-    incrementHandler = () => {
-        ///....
+    static defaultProps = {
+        incrementBy: 1
+    }
+    incrementHanlder = () => {
+        // this.props.incrementBy = 12
+        this.setState((prevState, props) => {
+            //increment the count with previous value
+            console.log(prevState, props);
+            return {
+                count: prevState.count + props.incrementBy
+            }
+
+        })
     }
     render() {
         return (
             <div>
-                <h3>{this.state.count} </h3>
-                <button> + </button>
+                <h3> {this.state.count}</h3>
+                <button onClick={this.incrementHanlder}>+</button>
             </div>
         )
     }
 }
-
+Counter.propTypes = {
+    incrementBy: PropTypes.number.isRequired
+}
 render(<Counter incrementBy={1} />, node);
