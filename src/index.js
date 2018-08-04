@@ -25,23 +25,6 @@ class ChildComponent extends Component {
   }
 }
 
-class ChildComponent2 extends Component {
-  constructor(props) {
-    super(props);
-    //   console.log('ChildComponent: constructor');
-  }
-  componentDidMount() {
-    console.log('ChildComponent2: componentDidMount');
-  }
-  render() {
-    //   console.log('ChildComponent: render');
-    return (
-      <div>
-        <p> Message : {this.props.msg} </p>
-      </div>
-    );
-  }
-}
 class ParentComponent extends Component {
   constructor(props) {
     super(props);
@@ -71,7 +54,6 @@ class ParentComponent extends Component {
           value={this.state.msg}
         />
         <ChildComponent msg={this.state.msg} />
-        <ChildComponent2 msg={this.state.msg} />
       </div>
     );
   }
