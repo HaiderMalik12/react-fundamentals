@@ -8,6 +8,9 @@ class ChildComponent extends Component {
   constructor(props) {
     super(props);
     console.log('ChildComponent: constructor');
+    this.state = {
+      isError: false
+    };
   }
   componentWillMount() {
     console.log('ChildComponent: componentWillMount');
@@ -23,7 +26,7 @@ class ChildComponent extends Component {
     console.log('ChildComponent: shouldComponentUpdate');
     console.log('nextProps:', nextProps);
     console.log('nextState:', nextState);
-    return false;
+    return true;
   }
 
   componentWillUpdate(nextProps, nextState) {
@@ -36,11 +39,21 @@ class ChildComponent extends Component {
     console.log('PrevProps:', prevProps);
     console.log('PrevState:', prevState);
   }
+  componentWillUnmount() {
+    console.log('ChildComponent: componentWillUnMount');
+  }
+  catchHandler = () => {
+    this.setState({ isError: true });
+  };
   render() {
     console.log('ChildComponent: render');
+    if (this.state.isError) {
+      throw new Error('Something went wrong');
+    }
     return (
       <div>
         <p> Message : {this.props.msg} </p>
+        <button onClick={this.catchHandler}>Catch Error </button>
       </div>
     );
   }
@@ -63,8 +76,21 @@ class ParentComponent extends Component {
   onChangeHandler = event => {
     this.setState({ msg: event.target.value });
   };
+  componentWillUnmount() {
+    console.log('ParentComponent: componentWillUnMount');
+  }
+  componentDidCatch(err, errorInfo) {
+    console.log('ParentComponent: componentDidCatch');
+    console.error(err);
+    console.error(errorInfo);
+    this.setState({ err, errorInfo });
+  }
   render() {
     console.log('ParentComponent: render');
+    if (this.state.err) {
+      //<CatchError/>
+      return <div>Something went wrong</div>;
+    }
     return (
       <div>
         <h2>LifeCycle methods</h2>
